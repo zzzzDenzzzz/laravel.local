@@ -21,25 +21,39 @@
                         <a class="nav-link" aria-current="page" href="{{route('home')}}">Home</a>
                     </li>
                     @if (Route::has('login'))
-                        @auth
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Dashboard</a>
-                            </li>
-                        @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('register')}}">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('login')}}">Login</a>
-                            </li>
-                        @endif
+                    @auth
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Dashboard</a>
+                    </li>
+                    @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('register')}}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('login')}}">Login</a>
+                    </li>
+                    @endif
                     @endif
                 </ul>
             </div>
         </div>
     </nav>
-    <main class="main mt-3">
+    <main class="main my-3">
         <div class="container">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+            @if (session('success'))
+            <div class="alert alert-success">
+                {{session('success')}}
+            </div>
+            @endif
             @yield('content')
         </div>
     </main>
